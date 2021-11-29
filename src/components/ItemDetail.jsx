@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import ItemCount from './ItemCount';
 import { DetailContainer, WrapperDetail, ImgContainer, ImageDetail, InfoContainer, Title, Desc, Price } from './styledComponents';
 
 const ItemDetail = ({ item }) => {
+    const [itemCount, setItemCount] = useState(0);
 
     const onAdd = (qty) => {
         alert("You have selected " + qty + " items.");
+        setItemCount(qty);
     }
 
     return (
@@ -23,7 +26,11 @@ const ItemDetail = ({ item }) => {
                         <Price>$ {item.cost}</Price>
                         <Desc>{item.stock} unidades en stock</Desc>
                     </InfoContainer>
-                    <ItemCount stock={item.stock} initial={1} onAdd={onAdd} />
+                    {
+                         itemCount === 0
+                         ? <ItemCount stock={item.stock} initial={itemCount} onAdd={onAdd} />
+                         : <Link to='/cart' style={{textDecoration: "none"}}><Button variant="contained" color="secondary">Checkout</Button></Link>
+                    }
                 </WrapperDetail>
             </DetailContainer>
             : <p>Cargando...</p>
