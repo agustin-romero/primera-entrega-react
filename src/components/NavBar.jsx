@@ -18,7 +18,7 @@ const NavBar = () => {
                 <Right>
                     <MenuItem>REGISTRO</MenuItem>
                     <MenuItem>INICIA SESION</MenuItem>
-                    <MenuItem><CartWidget /></MenuItem>
+                    <MenuItem><Link to='/cart'><CartWidget /></Link></MenuItem>
                 </Right>
             </Wrapper>
         </AppBar>
