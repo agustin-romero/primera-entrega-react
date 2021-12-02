@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { CartContext } from './CartContext';
+import { CartContext, useEffect } from './CartContext';
 import { WrapperCart, TitleCart, ContentCart, Product, ProductDetail, ImageCart, Details, PriceDetail, ProductAmountContainer, ProductAmount, ProductPrice, Hr } from './styledComponents';
 
 const Cart = () => {
     const test = useContext(CartContext);
-
-    console.log(test);
 
     return (
         <WrapperCart>
@@ -29,12 +27,28 @@ const Cart = () => {
                     <PriceDetail>
                         <ProductAmountContainer>
                         <ProductAmount>{item.qtyItem} item(s)</ProductAmount>
+                        /
+                        <ProductAmount>$ {item.costItem} each</ProductAmount>
                         </ProductAmountContainer>
-                        <ProductPrice>$ {item.costItem} each</ProductPrice>
+                        <ProductPrice>$ {test.calcTotalPerItem(item.idItem)} </ProductPrice>
                     </PriceDetail>
                     </Product>        
                     )
                     : <TitleCart>Tu carrito esta vacio</TitleCart>    
+                }
+                {
+                    test.cartList.length > 0 &&
+                        <Summary>
+                            <SummaryItem>
+                                <SummaryItemText>Subtotal</SummaryItemText>
+                                <SummaryItemPrice><FormatNumber number={test.calcSubTotal()} /></SummaryItemPrice>
+                            </SummaryItem>
+                            <SummaryItem type="total">
+                                <SummaryItemText>Total</SummaryItemText>
+                                <SummaryItemPrice><FormatNumber number={test.calcTotal()} /></SummaryItemPrice>
+                            </SummaryItem>
+                            <Button variant="outlined">Verificar</Button>
+                        </Summary>
                 }
             </ContentCart>
         </WrapperCart>

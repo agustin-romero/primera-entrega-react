@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Item from "./Item";
 import { ProductsContainer } from './styledComponents';
 
@@ -13,4 +14,4 @@ const ItemList = ({ items }) => {
     );
 }
 
-export default ItemList;
+export default memo(ItemList);

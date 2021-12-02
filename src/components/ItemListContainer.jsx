@@ -8,6 +8,9 @@ const { products } = require('../utils/products');
 
 const ItemListContainer = () => {
     const [datos, setDatos] = useState([]);
+
+    const [estado, setEstado] = useParams(false);
+
     const { idCategory } = useParams();
 
 
@@ -19,7 +22,7 @@ const ItemListContainer = () => {
         }))
             .then(result => setDatos(result))
             .catch(err => console.log(err))
-    }, [datos]);
+    }, [idCategory]);
 
     const onAdd = (qty) => {
         alert("You have selected " + qty + " items.");
@@ -27,6 +30,7 @@ const ItemListContainer = () => {
 
     return (
         <>  
+            <Button onClick={()=> setEstado(!estado)}>Cambiar Estado</Button>
             <ItemList items={datos} />
             <ItemCount stock={5} initial={1} onAdd={onAdd} /> 
         </>
