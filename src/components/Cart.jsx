@@ -2,14 +2,20 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { CartContext, useEffect } from './CartContext';
 import { WrapperCart, TitleCart, ContentCart, Product, ProductDetail, ImageCart, Details, PriceDetail, ProductAmountContainer, ProductAmount, ProductPrice, Hr } from './styledComponents';
+import { ShoppingCartOutlined } from "@material-ui/icons";
+import { DeleteIcon } from '@mui/icons-material/Delete';
+import './styles.css';
+
+import FormatNumber from "../utils/FormatNumber";
+
 
 const Cart = () => {
     const test = useContext(CartContext);
 
     return (
         <WrapperCart>
-            <TitleCart>Carrito</TitleCart>
-            <Button variant="outlined" onClick={test.removeList}>Borrar todos los productos</Button>
+            <TitleCart><ShoppingCartOutlined />Carrito<ShoppingCartOutlined /></TitleCart>
+            <button variant="outlined" startIcon={<DeleteIcon />} onClick={test.removeList} className="buttonStyle">Borrar todos los productos</button>
             <ContentCart>
                 {
                     test.cartList.lenght > 0 ?
@@ -21,7 +27,7 @@ const Cart = () => {
                         <span>
                             <b>Product:</b> {item.nameItem}
                         </span>
-                        <Button variant="outlined" onClick={() => test.deleteItem(item.idItem)}>Borrar producto</Button>
+                        <button variant="outlined" startIcon={<DeleteIcon />} onClick={() => test.deleteItem(item.idItem)} className="buttonStyle">Borrar producto</button>
                         </Details>
                     </ProductDetail>
                     <PriceDetail>
@@ -38,17 +44,17 @@ const Cart = () => {
                 }
                 {
                     test.cartList.length > 0 &&
-                        <Summary>
-                            <SummaryItem>
-                                <SummaryItemText>Subtotal</SummaryItemText>
-                                <SummaryItemPrice><FormatNumber number={test.calcSubTotal()} /></SummaryItemPrice>
-                            </SummaryItem>
-                            <SummaryItem type="total">
-                                <SummaryItemText>Total</SummaryItemText>
-                                <SummaryItemPrice><FormatNumber number={test.calcTotal()} /></SummaryItemPrice>
-                            </SummaryItem>
-                            <Button variant="outlined">Verificar</Button>
-                        </Summary>
+                        <div className="summary">
+                            <div className="summaryItem">
+                                <span className="summaryItemText">Subtotal</span>
+                                <span><FormatNumber number={test.calcSubTotal()} /></span>
+                            </div>
+                            <div type="total">
+                                <span>Total</span>
+                                <span><FormatNumber number={test.calcTotal()} /></span>
+                            </div>
+                            <button variant="outlined" className="buttonStyle">Verificar</button>
+                        </div>
                 }
             </ContentCart>
         </WrapperCart>
