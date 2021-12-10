@@ -11,9 +11,9 @@ const NavBar = () => {
                     <Link to='/' style={{textDecoration: "none", color: "yellow"}}><Logo>DARTANAN</Logo></Link>
                 </Left>
                 <Center>
-                    <Link to='/category/9' style={{textDecoration: "none", color: "blue"}}><MenuItem>Celulares</MenuItem></Link>
-                    <Link to='/category/1' style={{textDecoration: "none", color: "blue"}}><MenuItem>Consolas</MenuItem></Link>
-                    <Link to='/category/5' style={{textDecoration: "none", color: "blue"}}><MenuItem>Parlantes</MenuItem></Link>                    
+                    <Link to='/category/Dvdo7SfFrKjWzNGxYKiw' style={{textDecoration: "none", color: "blue"}}><MenuItem>Celulares</MenuItem></Link>
+                    <Link to='/category/ONdT8pGuW3z5qRiNG5m0' style={{textDecoration: "none", color: "blue"}}><MenuItem>Consolas</MenuItem></Link>
+                    <Link to='/category/hbTIiI67WX5vxPMc5rYu' style={{textDecoration: "none", color: "blue"}}><MenuItem>Parlantes</MenuItem></Link>                    
                 </Center>
                 <Right>
                     <MenuItem>REGISTRO</MenuItem>
