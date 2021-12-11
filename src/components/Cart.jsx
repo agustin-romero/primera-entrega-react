@@ -7,10 +7,62 @@ import { DeleteIcon } from '@mui/icons-material/Delete';
 import './styles.css';
 
 import FormatNumber from "../utils/FormatNumber";
+import styled from "styled-components";
 
+import { collection, doc, setDoc, serverTimestamp, updateDoc, increment } from "firebase/firestore";
+import db from '../utils/firebaseConfig';
 
 const Cart = () => {
     const test = useContext(CartContext);
+
+    const createOrder = () => {
+        const itemsForDB = test.cartList.map(item => ({
+          id: item.idItem,
+          title: item.nameItem,
+          price: item.costItem
+        }));
+    
+        test.cartList.forEach(async (item) => {
+          const itemRef = doc(db, "products", item.idItem);
+          await updateDoc(itemRef, {
+            stock: increment(-item.qtyItem)
+          });
+        });
+    
+        let order = {
+          buyer: {
+            name: "Leo Messi",
+            email: "leo@messi.com",
+            phone: "123456789"
+          },
+          total: test.calcTotal(),
+          items: itemsForDB,
+          date: serverTimestamp()
+        };
+      
+        console.log(order);
+        
+        const createOrderInFirestore = async () => {
+          // Add a new document with a generated id
+          const newOrderRef = doc(collection(db, "orders"));
+          await setDoc(newOrderRef, order);
+          return newOrderRef;
+        }
+      
+        createOrderInFirestore()
+          .then(result => alert('Your order has been created. Please take note of the ID of your order.\n\n\nOrder ID: ' + result.id + '\n\n'))
+          .catch(err => console.log(err));
+
+        test.cartList.forEach(async(item) => {
+            const itemRef = doc(db, "products", item.idItem);
+            await updateDoc(itemRef, {
+                stock: increment(-item.qtyItem)
+            })
+        })
+
+        test.removeList();
+      
+      }
 
     return (
         <WrapperCart>
@@ -53,7 +105,7 @@ const Cart = () => {
                                 <span>Total</span>
                                 <span><FormatNumber number={test.calcTotal()} /></span>
                             </div>
-                            <button variant="outlined" className="buttonStyle">Verificar</button>
+                            <button onClick={createOrder} variant="outlined" className="buttonStyle">Verificar</button>
                         </div>
                 }
             </ContentCart>
